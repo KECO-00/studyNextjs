@@ -18,8 +18,8 @@ export default Example;
 export async function getStaticProps() {
   const delayInSeconds = 2; //n초간 기다리라는 magic number
   const data = await new Promise((resolve) => // 실제 API를 mocking하기 위해서 Promise를 만들고
-    // setTimeout(() => resolve(Math.random()), delayInSeconds * 1000) // 2초 뒤에 Promise를 resolve하도록 mock API를 만듦
-    setTimeout(() => resolve(1), delayInSeconds * 1000) // 2초 뒤에 Promise를 resolve하도록 mock API를 만듦
+    setTimeout(() => resolve(Math.random()), delayInSeconds * 1000) // 2초 뒤에 Promise를 resolve하도록 mock API를 만듦
+    // setTimeout(() => resolve(1), delayInSeconds * 1000) // 2초 뒤에 Promise를 resolve하도록 mock API를 만듦
   );
 
   return {  // page 컴포넌트의 prop으로 전달됨
