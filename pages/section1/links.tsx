@@ -1,12 +1,29 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export default function Links() {
+
+  const router = useRouter();
+  useEffect(() => {
+    router.prefetch('/section1/getStaticProps')
+  },[router]);
 
   return (
     <main>
       <h1>Links</h1>
-      {/* <div style={{height: '200vh'}}/> */}
+      <button 
+        onClick={() => {
+          router.push('/section1/getStaticProps');
+        }}
+      >
+        /getStaticProps
+      </button>
+      
+      
 
+      {/* next/link로 라우팅하기 */}
+      {/* <div style={{height: '200vh'}}/> */}
       {/* <Link 
         href="/section1/getStaticProps" 
         style={{color: 'skyblue'}}
@@ -14,15 +31,16 @@ export default function Links() {
       >
         <a>/getStaticProps</a>
       </Link> */}
+      {/* <Link href="/section1/getStaticProps" style={{color: 'skyblue'}}>move to /getStaticProps</Link> */}
 
-      <Link href="/section1/getStaticProps" style={{color: 'skyblue'}}>move to /getStaticProps</Link>
-      {/* <a href="/section1/getStaticProps">using a tag</a> */}
     </main>
   );
 }
 
 
 /*
+
+  <next/link>
   실행하고 Link를 눌러 이동하면, getSTaticProps.json이 계속해서 생김
 
   Next.js에서는 최초로 실행했을 때, 해당 페이지의 HTML을 불러옴
@@ -67,4 +85,19 @@ export default function Links() {
      
   Next는 모든 페이지에 대한 pre-rendering을 진행해서 SEO를 보장함과 동시에, next/link를 통해 CSR 방식으로 라우팅을 함으로써
   빠른 라우팅과 적은 네트워크 요청도 가능함
+
+
+ <next/router>
+ useRouter 훅을 호출하여, router.push 함수를 실행하게 함 
+ >> 버튼 클릭 시 js와 json이 다운로드되면서 CSR 방식으로 라우팅 됨. 
+ >> 이렇게 useRouter는 next/link를 대체할 수 있음
+
+  하지만 next/link와 달리, 버튼이 바로 보인다고 해서 js와 json을 가져오는 것이 아님.
+  >> next/link처럼 자동으로 prefetch하기 위해서는 개발자가 직접 코드를 구현해야 함.
+  >> prefetch를 사용하고, 이동하고자 하는 URL을 파라미터로 넘기면 됨
+  >> 그럼 json과 js 파일이 prefetch된 것을 볼 수 있음
+
+  router.push가 아닌 router.replace로 routing을 하거나, query parameter를 바꿀 수도 있고, 현재 페이지의 query parameter를 이용하는 방법도 있음
+ 
+  router는 prefetch를 해주지 않기 때문에, next/link 사용을 권장함
 */
